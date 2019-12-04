@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include<string.h>
+#define MAXLINE 1000
+int prv(char mass[], int begin, int end);
+main()
+{
+	int wlen=0,N,fl=0;
+	char str[MAXLINE];
+	int l,F=0,i,pos=0,k=0,pos_cop=0,last_wlen=0;
+	printf("read a string:\n");
+	gets(str);
+	for (l=0; str[l]!='\0'; l++);
+	for(i=0; i<l; i++)
+	{
+		if(str[i]!=' '&& str[i]!='.' && str[i]!=',' && str[i]!='\t'&& str[i]!='\n')
+		{
+          if (F==0)
+            {
+                F = 1;
+                pos=i;
+            }
+		}
+		else if (F == 1)
+			{
+			    F = 0;
+				wlen=i-pos;
+				if(prv(str,pos,i)==0)
+                   {
+                      last_wlen=wlen;
+                       pos_cop= pos;
+                   }
+			}
+	}
+	for(i=pos_cop; i <= l; i++)
+        str[i]=str[i+last_wlen];
+	puts(str);
+	return 0;
+}
+int prv(char str[], int begin, int end)
+{
+	int F,i;
+	F=0;
+	for (i=begin; i < end; i++)
+	{
+		if ((str[i]<'A' || str[i]>'Z') && (str[i]<'a' || str[i]>'z'))
+			F=1;
+	}
+	return F;
+}
